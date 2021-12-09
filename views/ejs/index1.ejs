@@ -1,0 +1,24 @@
+<%- include('./partials/header.ejs')%> 
+
+<div class="container">
+  <table class="table table-striped table-bordered table-hover table-dark">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Titulo</th>
+        <th>Precio</th>
+        <th>Foto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= data.id  %> </td>
+        <td><%= data.title %> </td>
+        <td><%= data.price %> </td>
+        <td><%= data.thumbnail %> </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ 
+<%- include('./partials/header.ejs') %> 

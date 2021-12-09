@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Escuadra",
+    "price": 125.2,
+    "thumbnail": "url",
+    "id": 1
+  },
+  {
+    "title": "Calculadora",
+    "price": 42,
+    "thumbnail": "url",
+    "id": 2
+  },
+  {
+    "title": "Globo terraqueo",
+    "price": 25.99,
+    "thumbnail": "url",
+    "id": 3
+  },
+  {
+    "title": "hola",
+    "price": "12",
+    "thumbnail": "hola",
+    "id": 4
+  },
+  {
+    "title": "Computadora",
+    "price": "17000",
+    "thumbnail": "url-computadora",
+    "id": 5
+  },
+  {
+    "title": "ZTE Phone",
+    "price": "50000",
+    "thumbnail": "ZTE.jpg",
+    "id": 6
+  }
+]

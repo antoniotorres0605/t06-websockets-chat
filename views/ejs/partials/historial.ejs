@@ -1,0 +1,22 @@
+<br><br>
+<div>
+  <h2 style="color: brown;">Historial</h2>
+  <% if (personas.length > 0) { %>
+    <table class="table table-dark table-hover">
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+      </tr>
+      <% for( persona of personas ) { %>
+      <tr>
+        <td><%= persona.name  %> </td>
+        <td><%= persona.lastname %> </td>
+        <td><%= persona.age %> </td>
+      </tr>
+      <% } %>
+    </table>
+  <% } else{ %>
+    <p class="alert alert-danger">No se encontraron los datos</p>  
+  <% } %>
+</div>
