@@ -4,11 +4,16 @@ let path = require("path");
 let fs = require("fs");
 //const { type } = require("os");
 let {Router} = express;
+let {Server: HttpServer} = require('http');
+let {Server: SocketIO} = require("socket.io")
 
 let router = new Router();
 let id = new Router();
 let app = express();
 const PORT = 3000;
+
+let httpServer = new HttpServer(app);
+let socketIOServer = new SocketIO(httpServer);
 
 //app.engine("handlebars",engine());
 
@@ -64,6 +69,11 @@ app.use("/api",express.static(path.join(__dirname,"public","html")));
 
 app.get("/", (req,res,next) => {
   res.send("<h1>Pagina de Inicio<br></h1>");
+});
+
+socketIOServer.on("connection",socket=>{
+  socket.emit("misala","Hola");
+  console.log(`Nuevo usuario conectado ${socket.id }`);
 });
 
 app.listen(PORT,()=>{
