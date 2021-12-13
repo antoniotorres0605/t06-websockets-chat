@@ -18,21 +18,15 @@
     "id": 3
   },
   {
-    "title": "hola",
-    "price": "12",
-    "thumbnail": "hola",
-    "id": 4
-  },
-  {
     "title": "Computadora",
     "price": "17000",
     "thumbnail": "url-computadora",
-    "id": 5
+    "id": 4
   },
   {
     "title": "ZTE Phone",
     "price": "50000",
     "thumbnail": "ZTE.jpg",
-    "id": 6
+    "id": 5
   }
 ]

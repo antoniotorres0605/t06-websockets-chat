@@ -1,0 +1,29 @@
+<h1>Tutorial socket.IO</h1>
+  <input type="text" id="inputtext" placeholder="Ingrese aquí su texto">
+  <button id="sendSocket">Enviar</button>
+  <p id="contenedor_texto" style="background-color: aqua; padding: 20px 30px; width: 100%; max-width: 500px; color: black;"></p>
+  <script>
+    let socket = io();
+    let input = document.getElementById("inputtext");
+    let parrafo = document.getElementById("contenedor_texto");
+    let button = document.getElementById("sendSocket");
+    socket.on("listenserver",data =>{
+      let inner = "";
+      data.forEach(element => {
+        inner+=`<b>${element.id}:</b> ${element.mensaje} </br>`;
+      });
+      parrafo.innerHTML = inner;
+      //console.log("Info enviada desde nuestro servidor [fillP]",data);
+    });
+    socket.on("init",data =>{
+      let inner = "";
+      data.forEach(element => {
+        inner+=`<b>${element.id}:</b> ${element.mensaje} </br>`;
+      });
+      parrafo.innerHTML = inner;
+    });
+    button.addEventListener("click",e=>{
+      socket.emit("fillP",input.value);
+      input.value="";
+    })
+  </script>

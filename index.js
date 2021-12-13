@@ -4,13 +4,16 @@ let path = require("path");
 let fs = require("fs");
 //const { type } = require("os");
 let {Router} = express;
-let {Server: HttpServer} = require('http');
-let {Server: SocketIO} = require("socket.io")
+let {Server: HttpServer} = require("http");
+let {Server: SocketIO} = require("socket.io");
 
 let router = new Router();
 let id = new Router();
 let app = express();
-const PORT = 3000;
+const PORT = 8081;
+
+
+let mensajes = [];
 
 let httpServer = new HttpServer(app);
 let socketIOServer = new SocketIO(httpServer);
@@ -63,19 +66,33 @@ router.post("/",(req,res,next)=>{
 });
 
 // MIDDLEWARE
-app.use("/api/productos",router);
-app.use("/api/productos",id);
-app.use("/api",express.static(path.join(__dirname,"public","html")));
+app.use("/api",router);
+app.use("/api",id);
+//app.use("/api",express.static(path.join(__dirname,"public","html")));
 
 app.get("/", (req,res,next) => {
   res.send("<h1>Pagina de Inicio<br></h1>");
 });
 
-socketIOServer.on("connection",socket=>{
+/*socketIOServer.on("connection",socket=>{
   socket.emit("misala","Hola");
   console.log(`Nuevo usuario conectado ${socket.id }`);
+});*/
+
+socketIOServer.on("connection",socket=>{
+  socket.on("fillP",data =>{
+    let res = {
+      id : socket.id,
+      mensaje : data
+    };
+    mensajes.push(res);
+    //backupInfo = data;
+    socketIOServer.sockets.emit('listenserver',mensajes); 
+  });
+  socket.emit("init",mensajes);
+  console.log(`Nuevo usuario conectado ${socket.id}`);
 });
 
-app.listen(PORT,()=>{
+httpServer.listen(PORT,()=>{
   console.log(`Server on http://localhost:${PORT}`)
 });
