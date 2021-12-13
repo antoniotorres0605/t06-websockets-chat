@@ -35,6 +35,9 @@ let c1 = new Contenedor('./productos.txt');
 router.get("/",(req,res,next)=>{
   c1.getAll().then(data=>{
     res.render("index",{data});
+    socketIOServer.on("connection",socket1=>{
+    socketIOServer.sockets.emit("serverhistorial",data);
+  });
   }).catch(error=>{
     res.send(error);
   });
@@ -59,25 +62,20 @@ router.post("/",(req,res,next)=>{
   console.log(req.body.producto);
   c1.save(req.body.producto).then(data=>{
     console.log(data);
-    res.json(data);
   }).catch(error=>{
     res.send(error);
-  })
+  });
 });
 
 // MIDDLEWARE
 app.use("/api",router);
 app.use("/api",id);
-//app.use("/api",express.static(path.join(__dirname,"public","html")));
+//app.use("/formulario",express.static(path.join(__dirname,"public","html")));
 
 app.get("/", (req,res,next) => {
   res.send("<h1>Pagina de Inicio<br></h1>");
 });
 
-/*socketIOServer.on("connection",socket=>{
-  socket.emit("misala","Hola");
-  console.log(`Nuevo usuario conectado ${socket.id }`);
-});*/
 
 socketIOServer.on("connection",socket=>{
   socket.on("fillP",data =>{
@@ -90,7 +88,7 @@ socketIOServer.on("connection",socket=>{
     socketIOServer.sockets.emit('listenserver',mensajes); 
   });
   socket.emit("init",mensajes);
-  console.log(`Nuevo usuario conectado ${socket.id}`);
+  //console.log(`Nuevo usuario conectado ${socket.id}`);
 });
 
 httpServer.listen(PORT,()=>{
