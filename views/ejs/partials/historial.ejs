@@ -12,8 +12,10 @@
     <tbody id="historial_datos">
       <!---->
       <script>
-        let socket1 = io();
+        /*let socket1 = io();
+
         let parrafo1 = document.getElementById("historial_datos");
+
         socket1.on("serverhistorial",data =>{
           let inner = "";
           console.log(data);
@@ -28,6 +30,23 @@
           });
           parrafo1.innerHTML = inner;
         });
+        socket.emmit("productos",)*/
+        let parrafo1 = document.getElementById("historial_datos");
+        socket.on('productos',data =>{
+          console.log("Chale")
+          let inner = "";
+          console.log(data);
+          data.forEach(dato => {
+            inner+=`<tr>
+                      <th>${dato.id}</th>
+                      <th>${dato.title}</th>
+                      <th>${dato.price}</th>
+                      <th>${dato.thumbnail}</th>
+                      </tr>`;
+                      
+          });
+          parrafo1.innerHTML = inner;
+      });
       </script>
     </tbody>
   </table>

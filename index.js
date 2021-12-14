@@ -5,7 +5,7 @@ let fs = require("fs");
 //const { type } = require("os");
 let {Router} = express;
 let {Server: HttpServer} = require("http");
-let {Server: SocketIO} = require("socket.io");
+let Socket = require("./utils/sockets");
 
 let router = new Router();
 let id = new Router();
@@ -16,7 +16,8 @@ const PORT = 8081;
 let mensajes = [];
 
 let httpServer = new HttpServer(app);
-let socketIOServer = new SocketIO(httpServer);
+let socket = new Socket(httpServer);
+socket.init();
 
 //app.engine("handlebars",engine());
 
@@ -34,14 +35,12 @@ let c1 = new Contenedor('./productos.txt');
 
 router.get("/",(req,res,next)=>{
   c1.getAll().then(data=>{
+    
+    socket.tabla(data);
     res.render("index",{data});
-    socketIOServer.on("connection",socket1=>{
-    socketIOServer.sockets.emit("serverhistorial",data);
-  });
   }).catch(error=>{
     res.send(error);
   });
-  //res.send("Hola")
 });
 
 id.get("/:id",(req,res,next)=>{
@@ -62,6 +61,7 @@ router.post("/",(req,res,next)=>{
   console.log(req.body.producto);
   c1.save(req.body.producto).then(data=>{
     console.log(data);
+    res.json(data);
   }).catch(error=>{
     res.send(error);
   });
@@ -77,7 +77,7 @@ app.get("/", (req,res,next) => {
 });
 
 
-socketIOServer.on("connection",socket=>{
+/*socketIOServer.on("connection",socket=>{
   socket.on("fillP",data =>{
     let res = {
       id : socket.id,
@@ -89,7 +89,7 @@ socketIOServer.on("connection",socket=>{
   });
   socket.emit("init",mensajes);
   //console.log(`Nuevo usuario conectado ${socket.id}`);
-});
+});*/
 
 httpServer.listen(PORT,()=>{
   console.log(`Server on http://localhost:${PORT}`)
